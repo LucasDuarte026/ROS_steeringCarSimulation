@@ -1,0 +1,8 @@
+prefix=/home/luska/car_project_link/devel
+
+Name: car_description
+Description: Description of car_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,2 @@
+car_description:first_attempt
+-DCATKIN_DEVEL_PREFIX=/home/luska/car_project_link/devel -DCMAKE_INSTALL_PREFIX=/home/luska/car_project_link/install -G Unix Makefiles

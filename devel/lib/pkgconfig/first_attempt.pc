@@ -1,0 +1,8 @@
+prefix=/home/luska/car_project_link/devel
+
+Name: first_attempt
+Description: Description of first_attempt
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
