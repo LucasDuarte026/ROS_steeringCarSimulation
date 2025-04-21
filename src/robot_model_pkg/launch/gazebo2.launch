@@ -14,13 +14,15 @@
     <!-- Load controller parameters -->
     <rosparam file="$(find robot_model_pkg)/config/controllers.yaml" command="load" />
 
-    <!-- Load the controllers with proper namespace handling -->
+    <!-- Load the controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner"
-        respawn="false" output="screen"
-        args="--namespace=/car
-            joint_state_controller
-            front_left_steering_controller
-            front_right_steering_controller" />
+        respawn="false" output="screen" ns="/car"
+        args="joint_state_controller
+              front_left_steering_controller
+              front_right_steering_controller
+              back_left_velocity_controller
+              back_right_velocity_controller" />
+
     <!-- Convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher"
         pkg="robot_state_publisher"

@@ -1,28 +1,40 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import Float64
+from math import sin
 
-def steer_car():
-    rospy.init_node('steer_control', anonymous=True)
+def car_control():
+    rospy.init_node('car_control')
     
-    # Create publishers for each steering controller
-    left_steer_pub = rospy.Publisher('/car/front_left_steering_controller/command', Float64, queue_size=10)
-    right_steer_pub = rospy.Publisher('/car/front_right_steering_controller/command', Float64, queue_size=10)
+    # Steering control
+    fl_steer = rospy.Publisher('/car/front_left_steering_controller/command', Float64, queue_size=1)
+    fr_steer = rospy.Publisher('/car/front_right_steering_controller/command', Float64, queue_size=1)
     
-    rate = rospy.Rate(10) # 10hz
-    counter =0
+    # Velocity control
+    bl_vel = rospy.Publisher('/car/back_left_velocity_controller/command', Float64, queue_size=1)
+    br_vel = rospy.Publisher('/car/back_right_velocity_controller/command', Float64, queue_size=1)
+    
+    rate = rospy.Rate(10)
+    start_time = rospy.get_time()
+    
     while not rospy.is_shutdown():
-        # Example: simple sinusoidal steering pattern
-        counter+=1
-        angle = 0.3 * (rospy.get_time() % 6.28)  # Varies between -0.3 and 0.3
-        print("testando ", counter, " Angle: ",angle)
-        left_steer_pub.publish(angle)
-        right_steer_pub.publish(angle)
+        t = rospy.get_time() - start_time
         
+        # Steering (sinusoidal for testing)
+        steer_angle = 0.3 * sin(t)
+        fl_steer.publish(steer_angle)
+        fr_steer.publish(steer_angle)
+        
+        # Constant velocity
+        velocity = 2.0  # rad/s
+        bl_vel.publish(velocity)
+        br_vel.publish(velocity)
+        
+        rospy.loginfo(f"Steering: {steer_angle:.2f} rad, Velocity: {velocity:.2f} rad/s")
         rate.sleep()
 
 if __name__ == '__main__':
     try:
-        steer_car()
+        car_control()
     except rospy.ROSInterruptException:
         pass
