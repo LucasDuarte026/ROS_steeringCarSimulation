@@ -2,4 +2,4 @@
 source_root_dir = '/home/luska/car_project_link/src'
 whitelisted_packages = ''.split(';') if '' != '' else []
 blacklisted_packages = ''.split(';') if '' != '' else []
-underlay_workspaces = '/opt/ros/noetic'.split(';') if '/opt/ros/noetic' != '' else []
+underlay_workspaces = '/home/luska/car_project_link/devel;/opt/ros/noetic'.split(';') if '/home/luska/car_project_link/devel;/opt/ros/noetic' != '' else []

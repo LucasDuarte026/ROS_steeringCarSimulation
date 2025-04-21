@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<robot name="car" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!-- ===== Global Parameters ===== -->
+<xacro:property name="car_length" value="0.3762" />             <!-- x axis  -->
+<xacro:property name="car_width" value="0.2124" />              <!-- y axis  -->
+<xacro:property name="car_height" value="0.0762" />              <!-- z axis  -->
+<xacro:property name="car_mass" value="0.7" />
+<xacro:property name="wheel_radius" value="0.0508" />
+<xacro:property name="wheel_length" value="0.0508" />
+<xacro:property name="wheel_mass" value="0.1" />
+
+<xacro:property name="capota_car_length" value="0.2746" />             <!-- x axis  -->
+<xacro:property name="capota_car_width" value="0.2124" />              <!-- y axis  -->
+<xacro:property name="capota_car_height" value="0.0508" />              <!-- z axis  -->
+<xacro:property name="capota_car_mass" value="0.3" />
+
+<!-- Material do carrinho em si -->
+<material name="green">
+  <color rgba="0 1 0 1"/>
+</material>
+<!-- Material da caporta -->
+<material name="light_green">
+  <color rgba="0.1 1 0.2 1"/>
+</material>
+<!-- Material  das rodas -->
+<material name="yellow">
+  <color rgba="1 1 0 1"/>
+</material>
+
+<!-- Wheels -->
+<xacro:macro name="wheel" params="prefix x y roll">
+    <link name="${prefix}_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+        </geometry>
+        <material name="yellow"/>
+      </visual>
+
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+      </geometry>
+    </collision>
+    <inertial>
+        <mass value="${wheel_mass}"/>
+        <inertia 
+        ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}" 
+        ixy="0" 
+        ixz="0" 
+        iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}" 
+        iyz="0"
+        izz="${(wheel_mass/2) * wheel_radius**2}"/>
+    </inertial>
+</link>
+    <joint name="${prefix}_joint" type="revolute">
+      <parent link="base_link"/>
+      <child link="${prefix}_link"/>
+      <origin xyz="${x} ${y} ${-car_height/2}" rpy="${roll} 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-0.5" upper="0.5" effort="10.0" velocity="10.0"/>
+    </joint>
+    <transmission name="${prefix}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+</xacro:macro>
+
+<!-- Construções -->
+<link name="dummy_base"/>
+
+<joint name="dummy_joint" type="fixed">
+  <parent link="dummy_base"/>
+  <child link="base_link"/>
+</joint>
+<!-- Base Link -->
+<link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${car_length} ${car_width} ${car_height}"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${car_length} ${car_width} ${car_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+        <mass value="${car_mass}"/>
+        <inertia 
+        ixx="${(car_mass/12) * (car_width**2 + car_height**2)}" 
+        ixy="0" 
+        ixz="0" 
+        iyy="${(car_mass/12) * (car_length**2 + car_height**2)}" 
+        iyz="0"
+        izz="${(car_mass/12) * (car_length**2 + car_width**2)}"/>
+    </inertial>
+</link>
+  
+<!-- capota -->
+<link name="capota">
+    <visual>
+      <geometry>
+        <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}"/>
+      </geometry>
+      <material name="light_green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+        <mass value="${capota_car_mass}"/>
+        <inertia 
+        ixx="${(capota_car_mass/12) * (capota_car_width**2 + capota_car_height**2)}" 
+        ixy="0" 
+        ixz="0" 
+        iyy="${(capota_car_mass/12) * (capota_car_length**2 + capota_car_height**2)}" 
+        iyz="0"
+        izz="${(capota_car_mass/12) * (capota_car_length**2 + capota_car_width**2)}"/>
+    </inertial>
+</link>
+<joint name="capota_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="capota"/>
+    <origin xyz="${capota_car_length/2-car_length/2} 0 ${car_height/2+capota_car_height/2}" rpy="0 0 0"/>
+    <axis xyz="0 0 0"/>
+</joint>
+
+<!-- 4 rodas -->
+<xacro:wheel prefix="front_left_wheel" x="${car_length/2}" y="${car_width/2+wheel_length/2}" roll="${pi/2}"/>
+<xacro:wheel prefix="front_right_wheel" x="${car_length/2}" y="${-car_width/2-wheel_length/2}" roll="${pi/2}"/>
+<xacro:wheel prefix="back_left_wheel" x="${-car_length/2}" y="${+car_width/2+wheel_length/2}" roll="${pi/2}"/>
+<xacro:wheel prefix="back_right_wheel" x="${-car_length/2}" y="${-car_width/2-wheel_length/2}" roll="${pi/2}"/>
+
+<!-- Add this for each steerable joint -->
+<xacro:macro name="steerable_wheel" params="prefix">
+  <transmission name="${prefix}_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</xacro:macro>
+
+<!-- Call this macro for each steerable wheel after its joint definition -->
+<xacro:steerable_wheel prefix="front_left_wheel"/>
+<xacro:steerable_wheel prefix="front_right_wheel"/>
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/car</robotNamespace>
+    <controlPeriod>0.001</controlPeriod>
+    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+  </plugin>
+</gazebo>
+</robot>

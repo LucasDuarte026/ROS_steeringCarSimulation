@@ -132,6 +132,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/gtest/cmake_install.cmake")
   include("/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/first_attempt/cmake_install.cmake")
+  include("/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/robot_model_pkg/cmake_install.cmake")
   include("/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description/cmake_install.cmake")
 
 endif()
