@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/luska/car_project_link/src
+CMAKE_SOURCE_DIR = /home/luska/Documents/IntelligentRobotics/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build
+CMAKE_BINARY_DIR = /home/luska/Documents/IntelligentRobotics/build
 
 # Utility rule file for car_description_xacro_generated_to_devel_space_.
 
@@ -63,10 +63,10 @@ car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/b
 .PHONY : car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/build
 
 car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/clean:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description && $(CMAKE_COMMAND) -P CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/cmake_clean.cmake
+	cd /home/luska/Documents/IntelligentRobotics/build/car_description && $(CMAKE_COMMAND) -P CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/cmake_clean.cmake
 .PHONY : car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/clean
 
 car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/depend:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/car_project_link/src /home/luska/car_project_link/src/car_description /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/luska/Documents/IntelligentRobotics/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/src/car_description /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build/car_description /home/luska/Documents/IntelligentRobotics/build/car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : car_description/CMakeFiles/car_description_xacro_generated_to_devel_space_.dir/depend
 

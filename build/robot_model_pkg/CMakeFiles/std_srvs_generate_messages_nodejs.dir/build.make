@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/luska/car_project_link/src
+CMAKE_SOURCE_DIR = /home/luska/Documents/IntelligentRobotics/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build
+CMAKE_BINARY_DIR = /home/luska/Documents/IntelligentRobotics/build
 
 # Utility rule file for std_srvs_generate_messages_nodejs.
 
@@ -63,10 +63,10 @@ robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/build: std_srvs
 .PHONY : robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/build
 
 robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/clean:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/robot_model_pkg && $(CMAKE_COMMAND) -P CMakeFiles/std_srvs_generate_messages_nodejs.dir/cmake_clean.cmake
+	cd /home/luska/Documents/IntelligentRobotics/build/robot_model_pkg && $(CMAKE_COMMAND) -P CMakeFiles/std_srvs_generate_messages_nodejs.dir/cmake_clean.cmake
 .PHONY : robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/clean
 
 robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/depend:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/car_project_link/src /home/luska/car_project_link/src/robot_model_pkg /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/robot_model_pkg /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/luska/Documents/IntelligentRobotics/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/src/robot_model_pkg /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build/robot_model_pkg /home/luska/Documents/IntelligentRobotics/build/robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : robot_model_pkg/CMakeFiles/std_srvs_generate_messages_nodejs.dir/depend
 

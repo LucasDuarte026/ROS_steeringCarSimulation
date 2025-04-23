@@ -1,8 +1,8 @@
-# Install script for directory: /home/luska/car_project_link/src/car_description
+# Install script for directory: /home/luska/Documents/IntelligentRobotics/src/car_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/luska/car_project_link/install")
+  set(CMAKE_INSTALL_PREFIX "/home/luska/Documents/IntelligentRobotics/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description/catkin_generated/installspace/car_description.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/luska/Documents/IntelligentRobotics/build/car_description/catkin_generated/installspace/car_description.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/car_description/cmake" TYPE FILE FILES
-    "/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description/catkin_generated/installspace/car_descriptionConfig.cmake"
-    "/mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/car_description/catkin_generated/installspace/car_descriptionConfig-version.cmake"
+    "/home/luska/Documents/IntelligentRobotics/build/car_description/catkin_generated/installspace/car_descriptionConfig.cmake"
+    "/home/luska/Documents/IntelligentRobotics/build/car_description/catkin_generated/installspace/car_descriptionConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/car_description" TYPE FILE FILES "/home/luska/car_project_link/src/car_description/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/car_description" TYPE FILE FILES "/home/luska/Documents/IntelligentRobotics/src/car_description/package.xml")
 endif()
 

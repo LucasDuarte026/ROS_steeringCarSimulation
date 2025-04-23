@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/luska/car_project_link/src
+CMAKE_SOURCE_DIR = /home/luska/Documents/IntelligentRobotics/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build
+CMAKE_BINARY_DIR = /home/luska/Documents/IntelligentRobotics/build
 
 # Utility rule file for clean_test_results.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_proje
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/test_results
+	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/luska/Documents/IntelligentRobotics/build/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make
@@ -71,6 +71,6 @@ CMakeFiles/clean_test_results.dir/clean:
 .PHONY : CMakeFiles/clean_test_results.dir/clean
 
 CMakeFiles/clean_test_results.dir/depend:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/car_project_link/src /home/luska/car_project_link/src /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/luska/Documents/IntelligentRobotics/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_test_results.dir/depend
 

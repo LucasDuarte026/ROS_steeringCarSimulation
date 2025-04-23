@@ -1,4 +1,4 @@
-prefix=/home/luska/car_project_link/devel
+prefix=/home/luska/Documents/IntelligentRobotics/devel
 
 Name: first_attempt
 Description: Description of first_attempt

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/luska/car_project_link/src
+CMAKE_SOURCE_DIR = /home/luska/Documents/IntelligentRobotics/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build
+CMAKE_BINARY_DIR = /home/luska/Documents/IntelligentRobotics/build
 
 # Utility rule file for roscpp_generate_messages_py.
 
@@ -63,10 +63,10 @@ first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/build: roscpp_generate_
 .PHONY : first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/build
 
 first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/clean:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/first_attempt && $(CMAKE_COMMAND) -P CMakeFiles/roscpp_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/luska/Documents/IntelligentRobotics/build/first_attempt && $(CMAKE_COMMAND) -P CMakeFiles/roscpp_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/clean
 
 first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/depend:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/car_project_link/src /home/luska/car_project_link/src/first_attempt /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/first_attempt /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/luska/Documents/IntelligentRobotics/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/src/first_attempt /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build/first_attempt /home/luska/Documents/IntelligentRobotics/build/first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : first_attempt/CMakeFiles/roscpp_generate_messages_py.dir/depend
 

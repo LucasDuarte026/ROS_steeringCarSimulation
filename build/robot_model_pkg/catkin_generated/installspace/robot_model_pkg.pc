@@ -1,4 +1,4 @@
-prefix=/home/luska/car_project_link/install
+prefix=/home/luska/Documents/IntelligentRobotics/install
 
 Name: robot_model_pkg
 Description: Description of robot_model_pkg

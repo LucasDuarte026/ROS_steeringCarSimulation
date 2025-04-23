@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/luska/car_project_link/src
+CMAKE_SOURCE_DIR = /home/luska/Documents/IntelligentRobotics/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build
+CMAKE_BINARY_DIR = /home/luska/Documents/IntelligentRobotics/build
 
 # Utility rule file for download_extra_data.
 
@@ -67,6 +67,6 @@ CMakeFiles/download_extra_data.dir/clean:
 .PHONY : CMakeFiles/download_extra_data.dir/clean
 
 CMakeFiles/download_extra_data.dir/depend:
-	cd /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/car_project_link/src /home/luska/car_project_link/src /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build /mnt/c/Users/micro/OneDrive/Documentos/hof/robotics/car_project/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/luska/Documents/IntelligentRobotics/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/src /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build /home/luska/Documents/IntelligentRobotics/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/download_extra_data.dir/depend
 

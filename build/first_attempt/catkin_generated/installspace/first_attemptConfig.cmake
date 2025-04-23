@@ -67,14 +67,14 @@ set(first_attempt_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(first_attempt_SOURCE_PREFIX /home/luska/car_project_link/src/first_attempt)
-  set(first_attempt_DEVEL_PREFIX /home/luska/car_project_link/devel)
+  set(first_attempt_SOURCE_PREFIX /home/luska/Documents/IntelligentRobotics/src/first_attempt)
+  set(first_attempt_DEVEL_PREFIX /home/luska/Documents/IntelligentRobotics/devel)
   set(first_attempt_INSTALL_PREFIX "")
   set(first_attempt_PREFIX ${first_attempt_DEVEL_PREFIX})
 else()
   set(first_attempt_SOURCE_PREFIX "")
   set(first_attempt_DEVEL_PREFIX "")
-  set(first_attempt_INSTALL_PREFIX /home/luska/car_project_link/install)
+  set(first_attempt_INSTALL_PREFIX /home/luska/Documents/IntelligentRobotics/install)
   set(first_attempt_PREFIX ${first_attempt_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/luska/car_project_link/install/lib;/home/luska/car_project_link/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/luska/Documents/IntelligentRobotics/install/lib;/home/luska/Documents/IntelligentRobotics/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

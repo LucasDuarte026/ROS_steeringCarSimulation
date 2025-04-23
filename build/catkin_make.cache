@@ -1,2 +1,2 @@
 car_description:first_attempt:robot_model_pkg
--DCATKIN_DEVEL_PREFIX=/home/luska/car_project_link/devel -DCMAKE_INSTALL_PREFIX=/home/luska/car_project_link/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/luska/Documents/IntelligentRobotics/devel -DCMAKE_INSTALL_PREFIX=/home/luska/Documents/IntelligentRobotics/install -G Unix Makefiles
