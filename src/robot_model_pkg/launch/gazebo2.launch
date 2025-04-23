@@ -3,25 +3,26 @@
     <param name="robot_description"
         command="$(find xacro)/xacro '$(find robot_model_pkg)/urdf/car.xacro'" />
 
+    <!-- Launch Gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="worlds/empty.world" />
+        <arg name="paused" value="false" />
+        <arg name="use_sim_time" value="true" />
+        <arg name="gui" value="true" />
+        <arg name="headless" value="false" />
+        <arg name="debug" value="false" />
+    </include>
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
     <node name="urdf_spawner"
         pkg="gazebo_ros"
         type="spawn_model"
         respawn="false"
         output="screen"
-        args="-urdf -model car -param robot_description -x 0 -y 0 -z 0.1" />
+        args="-urdf -model car -param robot_description -x 0 -y 0 -z 10" />
 
     <!-- Load controller parameters -->
-    <rosparam file="$(find robot_model_pkg)/config/controllers.yaml" command="load" />
 
-    <!-- Load the controllers -->
-    <node name="controller_spawner" pkg="controller_manager" type="spawner"
-        respawn="false" output="screen" ns="/car"
-        args="joint_state_controller
-              front_left_steering_controller
-              front_right_steering_controller
-              back_left_velocity_controller
-              back_right_velocity_controller" />
+    <!-- <rosparam file="$(find robot_model_pkg)/config/controllers.yaml" command="load" /> -->
 
     <!-- Convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher"
@@ -32,13 +33,5 @@
         <remap from="/joint_states" to="/car/joint_states" />
     </node>
 
-    <!-- Launch Gazebo -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="worlds/empty.world" />
-        <arg name="paused" value="false" />
-        <arg name="use_sim_time" value="true" />
-        <arg name="gui" value="true" />
-        <arg name="headless" value="false" />
-        <arg name="debug" value="false" />
-    </include>
+    
 </launch>

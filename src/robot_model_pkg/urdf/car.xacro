@@ -1,163 +1,178 @@
 <?xml version="1.0"?>
 <robot name="car" xmlns:xacro="http://ros.org/wiki/xacro">
 
-<!-- ===== Global Parameters ===== -->
-<xacro:property name="pi" value="3.1415926535897931" />
-<xacro:property name="car_length" value="0.3762" />             <!-- x axis  -->
-<xacro:property name="car_width" value="0.2124" />              <!-- y axis  -->
-<xacro:property name="car_height" value="0.0762" />              <!-- z axis  -->
-<xacro:property name="car_mass" value="0.7" />
-<xacro:property name="wheel_radius" value="0.0508" />
-<xacro:property name="wheel_length" value="0.0508" />
-<xacro:property name="wheel_mass" value="0.1" />
+  <!-- ===== Global Parameters ===== -->
+  <xacro:property name="pi" value="3.1415926535897931" />
+  <xacro:property name="car_length" value="0.3762" />             <!-- x axis  -->
+  <xacro:property name="car_width" value="0.2124" />              <!-- y axis  -->
+  <xacro:property name="car_height" value="0.0762" />              <!-- z axis  -->
+  <xacro:property name="car_mass" value="0.7" />
+  <xacro:property name="wheel_radius" value="0.0508" />
+  <xacro:property name="wheel_length" value="0.0508" />
+  <xacro:property name="wheel_mass" value="0.1" />
 
-<xacro:property name="capota_car_length" value="0.2746" />      <!-- x axis  -->
-<xacro:property name="capota_car_width" value="0.2124" />       <!-- y axis  -->
-<xacro:property name="capota_car_height" value="0.0508" />      <!-- z axis  -->
-<xacro:property name="capota_car_mass" value="0.3" />
+  <xacro:property name="capota_car_length" value="0.2746" />      <!-- x axis  -->
+  <xacro:property name="capota_car_width" value="0.2124" />       <!-- y axis  -->
+  <xacro:property name="capota_car_height" value="0.0508" />      <!-- z axis  -->
+  <xacro:property name="capota_car_mass" value="0.3" />
 
-<!-- Materials -->
-<material name="green">
-  <color rgba="0 1 0 1"/>
-</material>
-<material name="light_green">
-  <color rgba="0.1 1 0.2 1"/>
-</material>
-<material name="yellow">
-  <color rgba="1 1 0 1"/>
-</material>
+  <!-- Materials -->
+  <material name="green">
+    <color rgba="0 1 0 1" />
+  </material>
+  <material name="light_green">
+    <color rgba="0.1 1 0.2 1" />
+  </material>
+  <material name="yellow">
+    <color rgba="1 1 0 1" />
+  </material>
 
-<!-- Base Link -->
-<link name="base_link">
+  <!-- Base Link -->
+  <link name="dummy"> </link>
+  <joint name="dummy_joint" type="fixed">
+    <parent link="dummy" />
+    <child link="base_link" />
+  </joint>
+  <link name="base_link">
     <visual>
       <geometry>
-        <box size="${car_length} ${car_width} ${car_height}"/>
+        <box size="${car_length} ${car_width} ${car_height}" />
       </geometry>
-      <material name="green"/>
+      <material name="green" />
     </visual>
     <collision>
       <geometry>
-        <box size="${car_length} ${car_width} ${car_height}"/>
+        <box size="${car_length} ${car_width} ${car_height}" />
       </geometry>
     </collision>
     <inertial>
-        <mass value="${car_mass}"/>
-        <inertia 
-        ixx="${(car_mass/12) * (car_width**2 + car_height**2)}" 
-        ixy="0" 
-        ixz="0" 
-        iyy="${(car_mass/12) * (car_length**2 + car_height**2)}" 
+      <mass value="${car_mass}" />
+      <inertia
+        ixx="${(car_mass/12) * (car_width**2 + car_height**2)}"
+        ixy="0"
+        ixz="0"
+        iyy="${(car_mass/12) * (car_length**2 + car_height**2)}"
         iyz="0"
-        izz="${(car_mass/12) * (car_length**2 + car_width**2)}"/>
+        izz="${(car_mass/12) * (car_length**2 + car_width**2)}" />
     </inertial>
-</link>
+  </link>
+  <!-- Gazebo friction parameters -->
+  <gazebo reference="base_link">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <!-- <kp>1000000.0</kp>
+  <kd>1.0</kd> -->
+  </gazebo>
 
-<!-- Roof -->
-<link name="capota">
+
+  <!-- Roof -->
+  <link name="capota">
     <visual>
       <geometry>
-        <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}"/>
+        <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}" />
       </geometry>
-      <material name="light_green"/>
+      <material name="light_green" />
     </visual>
     <collision>
       <geometry>
-        <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}"/>
+        <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}" />
       </geometry>
     </collision>
     <inertial>
-        <mass value="${capota_car_mass}"/>
-        <inertia 
-        ixx="${(capota_car_mass/12) * (capota_car_width**2 + capota_car_height**2)}" 
-        ixy="0" 
-        ixz="0" 
-        iyy="${(capota_car_mass/12) * (capota_car_length**2 + capota_car_height**2)}" 
+      <mass value="${capota_car_mass}" />
+      <inertia
+        ixx="${(capota_car_mass/12) * (capota_car_width**2 + capota_car_height**2)}"
+        ixy="0"
+        ixz="0"
+        iyy="${(capota_car_mass/12) * (capota_car_length**2 + capota_car_height**2)}"
         iyz="0"
-        izz="${(capota_car_mass/12) * (capota_car_length**2 + capota_car_width**2)}"/>
+        izz="${(capota_car_mass/12) * (capota_car_length**2 + capota_car_width**2)}" />
     </inertial>
-</link>
-<joint name="capota_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="capota"/>
-    <origin xyz="${capota_car_length/2-car_length/2} 0 ${car_height/2+capota_car_height/2}" rpy="0 0 0"/>
-</joint>
+  </link>
+  <joint name="capota_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="capota" />
+    <origin xyz="${capota_car_length/2-car_length/2} 0 ${car_height/2+capota_car_height/2}"
+      rpy="0 0 0" />
+  </joint>
 
-<!-- Wheel Macro -->
-<xacro:macro name="wheel" params="prefix x y roll steerable:=false">
+  <!-- Wheel Macro -->
+  <xacro:macro name="wheel" params="prefix x y roll">
     <link name="${prefix}_link">
       <visual>
         <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}" />
         </geometry>
-        <material name="yellow"/>
+        <material name="yellow" />
       </visual>
       <collision>
         <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}" />
         </geometry>
       </collision>
       <inertial>
-        <mass value="${wheel_mass}"/>
-        <inertia 
-          ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}" 
-          ixy="0" 
-          ixz="0" 
-          iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}" 
+        <mass value="${wheel_mass}" />
+        <inertia
+          ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
+          ixy="0"
+          ixz="0"
+          iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
           iyz="0"
-          izz="${(wheel_mass/2) * wheel_radius**2}"/>
+          izz="${(wheel_mass/2) * wheel_radius**2}" />
       </inertial>
     </link>
-    
-    <joint name="${prefix}_joint" type="revolute">
-      <parent link="base_link"/>
-      <child link="${prefix}_link"/>
-      <origin xyz="${x} ${y} ${-car_height/2}" rpy="${roll} 0 0"/>
-      <axis xyz="0 0 1"/>
-      <limit lower="-0.5" upper="0.5" effort="10.0" velocity="10.0"/>
+
+    <joint name="${prefix}_joint" type="continuous">
+      <parent link="base_link" />
+      <child link="${prefix}_link" />
+      <origin xyz="${x} ${y} ${-car_height/2}" rpy="${roll} 0 0" />
+      <axis xyz="0 0 1" />
+      <limit effort="10.0" velocity="10.0" />
     </joint>
-    
-    <transmission name="${prefix}_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${prefix}_joint">
-        <hardwareInterface>
-          <xacro:if value="${steerable}">hardware_interface/EffortJointInterface</xacro:if>
-          <xacro:unless value="${steerable}">hardware_interface/VelocityJointInterface</xacro:unless>
-        </hardwareInterface>
-      </joint>
-      <actuator name="${prefix}_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-    </transmission>
-</xacro:macro>
 
-<!-- 4 wheels -->
-<xacro:wheel prefix="front_left_wheel" x="${car_length/2}" y="${car_width/2+wheel_length/2}" roll="${pi/2}" steerable="true"/>
-<xacro:wheel prefix="front_right_wheel" x="${car_length/2}" y="${-car_width/2-wheel_length/2}" roll="${pi/2}" steerable="true"/>
-<xacro:wheel prefix="back_left_wheel" x="${-car_length/2}" y="${+car_width/2+wheel_length/2}" roll="${pi/2}"/>
-<xacro:wheel prefix="back_right_wheel" x="${-car_length/2}" y="${-car_width/2-wheel_length/2}" roll="${pi/2}"/>
+ 
+    <gazebo reference="${prefix}_link">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <!-- <kp>1000000.0</kp>
+      <kd>1.0</kd> -->
+    </gazebo>
 
-<!-- Gazebo ROS Control -->
-<gazebo>
-  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-    <robotNamespace>/car</robotNamespace>
-    <controlPeriod>0.001</controlPeriod>
-    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-  </plugin>
-</gazebo>
+  </xacro:macro>
 
-<!-- Gazebo friction parameters -->
-<gazebo reference="base_link">
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <kp>1000000.0</kp>
-  <kd>1.0</kd>
-</gazebo>
+  <!-- 4 wheels -->
+  <xacro:wheel prefix="front_left_wheel" x="${car_length/2}" y="${car_width/2+wheel_length/2}"
+    roll="${pi/2}" />
+  <xacro:wheel prefix="front_right_wheel" x="${car_length/2}" y="${-car_width/2-wheel_length/2}"
+    roll="${pi/2}" />
+  <xacro:wheel prefix="back_left_wheel" x="${-car_length/2}" y="${+car_width/2+wheel_length/2}"
+    roll="${pi/2}" />
+  <xacro:wheel prefix="back_right_wheel" x="${-car_length/2}" y="${-car_width/2-wheel_length/2}"
+    roll="${pi/2}" />
 
-<gazebo reference="front_left_wheel_link">
-  <mu1>1.0</mu1>
-  <mu2>1.0</mu2>
-  <kp>1000000.0</kp>
-  <kd>1.0</kd>
-</gazebo>
+  <!-- Gazebo ROS Control -->
+  <!-- <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <controlPeriod>0.001</controlPeriod>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo> -->
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <updateRate>50.0</updateRate>
+      <leftJoint>front_left_wheel_joint</leftJoint>
+      <rightJoint>front_right_wheel_joint</rightJoint>
+      <wheelSeparation>0.2124</wheelSeparation>
+      <wheelDiameter>0.1016</wheelDiameter>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <odometryFrame>odom</odometryFrame>
+      <odometryTopic>odom</odometryTopic>
+      <commandTopic>cmd_vel</commandTopic>
+      <publishOdomTF>true</publishOdomTF>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+    </plugin>
+  </gazebo>
+  
 
 </robot>
