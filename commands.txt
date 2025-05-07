@@ -1,0 +1,13 @@
+
+sudo apt-get install ros-noetic-effort-controllers
+
+
+cd /project_folder
+
+source devel/setup.bash 
+
+ -- for seeing the car
+    roslaunch robot_model_pkg view_car.launch 
+
+ -- for launch the car simulations
+    roslaunch robot_model_pkg view_car.launch 

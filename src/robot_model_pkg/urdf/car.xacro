@@ -106,70 +106,102 @@
 
   
   <!-- Wheels -->
-  
-  <!-- front_left_wheel -->
-  <link name="front_left_wheel_link">
-    <visual>
-      <geometry>
-        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
-      </geometry>
-      <material name="yellow" />
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${wheel_mass}" />
-      <inertia
-        ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
-        ixy="0"
-        ixz="0"
-        iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
-        iyz="0"
-        izz="${(wheel_mass/2) * wheel_radius**2}" />
-    </inertial>
-  </link>
-  <joint name="front_left_wheel_joint" type="continuous">
-    <parent link="base_link" />
-    <child link="front_left_wheel_link" />
-    <origin xyz="${car_length/2} ${car_width/2+wheel_length/2} ${-car_height/2}" rpy="${pi/2} 0 0" />
-    <axis xyz="0 0 1" />
-    <limit effort="10.0" velocity="10.0" />
-  </joint>
+  <!-- Front Left Wheel -->
+<link name="front_left_steer_link">
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+  </inertial>
+</link>
 
-  <!-- front_right_wheel -->
-  <link name="front_right_wheel_link">
-    <visual>
-      <geometry>
-        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
-      </geometry>
-      <material name="yellow" />
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${wheel_mass}" />
-      <inertia
-        ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
-        ixy="0"
-        ixz="0"
-        iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
-        iyz="0"
-        izz="${(wheel_mass/2) * wheel_radius**2}" />
-    </inertial>
-  </link>
-  <joint name="front_right_wheel_joint" type="continuous">
-    <parent link="base_link" />
-    <child link="front_right_wheel_link" />
-    <origin xyz="${car_length/2} ${-car_width/2-wheel_length/2} ${-car_height/2}" rpy="${pi/2} 0 0" />
-    <axis xyz="0 0 1" />
-    <limit effort="10.0" velocity="10.0" />
-  </joint>
+<link name="front_left_wheel_link">
+  <visual>
+    <geometry>
+      <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+    </geometry>
+    <material name="yellow"/>
+  </visual>
+  <collision>
+    <geometry>
+      <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="${wheel_mass}"/>
+    <inertia
+      ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
+      ixy="0" ixz="0"
+      iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
+      iyz="0"
+      izz="${(wheel_mass/2) * wheel_radius**2}"/>
+  </inertial>
+</link>
+
+<!-- Steering joint (connects base to steer link) -->
+<joint name="steer_front_left_joint" type="revolute">
+  <parent link="base_link"/>
+  <child link="front_left_steer_link"/>
+  <origin xyz="${car_length/2} ${car_width/2} ${-car_height/2}"/>
+  <axis xyz="0 0 1"/>
+  <limit lower="-0.785" upper="0.785" effort="10.0" velocity="10.0"/> <!-- ±45° -->
+</joint>
+
+<!-- Wheel joint (connects steer link to wheel, provides rotation) -->
+<joint name="front_left_wheel_joint" type="continuous">
+  <parent link="front_left_steer_link"/>
+  <child link="front_left_wheel_link"/>
+  <origin xyz="0 ${wheel_length/2} 0" rpy="${pi/2} 0 0"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
+<!-- Front Right Wheel -->
+<link name="front_right_steer_link">
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+  </inertial>
+</link>
+
+<link name="front_right_wheel_link">
+  <visual>
+    <geometry>
+      <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+    </geometry>
+    <material name="yellow"/>
+  </visual>
+  <collision>
+    <geometry>
+      <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="${wheel_mass}"/>
+    <inertia
+      ixx="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
+      ixy="0" ixz="0"
+      iyy="${(wheel_mass/12) * (3*wheel_radius**2 + wheel_length**2)}"
+      iyz="0"
+      izz="${(wheel_mass/2) * wheel_radius**2}"/>
+  </inertial>
+</link>
+
+<!-- Steering joint (connects base to steer link) -->
+<joint name="steer_front_right_joint" type="revolute">
+  <parent link="base_link"/>
+  <child link="front_right_steer_link"/>
+  <origin xyz="${car_length/2} ${-car_width/2} ${-car_height/2}"/>
+  <axis xyz="0 0 1"/>
+  <limit lower="-0.785" upper="0.785" effort="10.0" velocity="10.0"/> <!-- ±45° -->
+</joint>
+
+<!-- Wheel joint (connects steer link to wheel, provides rotation) -->
+<joint name="front_right_wheel_joint" type="continuous">
+  <parent link="front_right_steer_link"/>
+  <child link="front_right_wheel_link"/>
+  <origin xyz="0 ${-wheel_length/2} 0" rpy="${pi/2} 0 0"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
 
 
   <!-- back_left_wheel -->
