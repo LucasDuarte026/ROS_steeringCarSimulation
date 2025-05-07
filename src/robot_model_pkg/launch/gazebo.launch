@@ -18,11 +18,23 @@
         type="spawn_model"
         respawn="false"
         output="screen"
-        args="-urdf -model car -param robot_description -x 0 -y 0 -z 10" />
+        args="-urdf -model car -param robot_description -x 0 -y 0 -z 0.5" />
 
     <!-- Load controller parameters -->
 
-    <!-- <rosparam file="$(find robot_model_pkg)/config/controllers.yaml" command="load" /> -->
+    <rosparam file="$(find robot_model_pkg)/config/controllers.yaml" command="load" />
+
+    <!-- Load and start the controllers -->
+    <node name="controller_spawner"
+        pkg="controller_manager"
+        type="spawner"
+        respawn="false"
+        output="screen"
+        ns="/car"
+        args="joint_state_controller
+        back_left_wheel_effort_controller
+        back_right_wheel_effort_controller" />
+
 
     <!-- Convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher"
@@ -33,5 +45,5 @@
         <remap from="/joint_states" to="/car/joint_states" />
     </node>
 
-    
+
 </launch>
