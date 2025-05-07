@@ -291,21 +291,41 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <transmission name="front_left_steer_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="steer_front_left_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="front_left_steer_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
+  <transmission name="front_right_steer_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="steer_front_right_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="front_right_steer_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <gazebo reference="back_right_wheel_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
+    <mu1>5.0</mu1>
+    <mu2>5.0</mu2>
   </gazebo>
   <gazebo reference="back_left_wheel_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
+    <mu1>5.0</mu1>
+    <mu2>5.0</mu2>
   </gazebo>
   <gazebo reference="front_right_wheel_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
+    <mu1>5.0</mu1>
+    <mu2>5.0</mu2>
   </gazebo>
   <gazebo reference="front_left_wheel_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
+    <mu1>5.0</mu1>
+    <mu2>5.0</mu2>
   </gazebo>
 </robot>

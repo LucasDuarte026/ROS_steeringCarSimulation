@@ -4,6 +4,7 @@ from std_msgs.msg import Float64
 from pynput import keyboard
 import threading
 import time
+import math
 
 class CarKeyboardController:
     def __init__(self):
@@ -13,11 +14,18 @@ class CarKeyboardController:
         self.back_left_pub = rospy.Publisher('/car/back_left_wheel_effort_controller/command', Float64, queue_size=10)
         self.back_right_pub = rospy.Publisher('/car/back_right_wheel_effort_controller/command', Float64, queue_size=10)
         
+        # Publishers for steering controllers
+        self.steer_left_pub = rospy.Publisher('/car/front_left_wheel_effort_controller/command', Float64, queue_size=10)
+        self.steer_right_pub = rospy.Publisher('/car/front_right_wheel_effort_controller/command', Float64, queue_size=10)
+
         # Parameters
         self.max_effort = 10.0
         self.effort_level = 3.0
-        self.turning_factor = 0.6  # How much to reduce inner wheel power during turns
-        
+        self.max_steering_angle = 0.785  # 45 degrees in radians
+        self.steering_step = 0.005  # How much to change steering angle per update
+        self.current_steering = 0.0  # Current steering angle (0 = straight)
+        self.effort_change_amount = 0.3 # increases/decreases the power by this amount when +/- is pressed
+
         # Track key states
         self.keys_pressed = set()
         
@@ -44,17 +52,17 @@ class CarKeyboardController:
         """Handle key press events"""
         try:
             # Add key to tracked keys if it's an arrow key or +/-
-            if key in [keyboard.Key.up, keyboard.Key.down, keyboard.Key.left, keyboard.Key.right] or \
-               (hasattr(key, 'char') and key.char in ['+', '-']):
+            if (key in [keyboard.Key.up, keyboard.Key.down, keyboard.Key.left, keyboard.Key.right] or 
+                        (hasattr(key, 'char') and key.char in ['+', '-'])):
                 self.keys_pressed.add(key)
                 
                 # Handle +/- immediately to adjust power
                 if hasattr(key, 'char'):
                     if key.char == '+':
-                        self.effort_level = min(self.max_effort, self.effort_level + 0.5)
+                        self.effort_level = min(self.max_effort, self.effort_level + self.effort_change_amount)
                         rospy.loginfo(f"Power increased to {self.effort_level:.1f}")
                     elif key.char == '-':
-                        self.effort_level = max(0.5, self.effort_level - 0.5)
+                        self.effort_level = max(self.effort_change_amount, self.effort_level - self.effort_change_amount)
                         rospy.loginfo(f"Power decreased to {self.effort_level:.1f}")
         except Exception as e:
             rospy.logerr(f"Error on key press: {e}")
@@ -87,14 +95,37 @@ class CarKeyboardController:
 
         return left_effort, right_effort
     
+    def update_steering(self):
+        """Update steering angle based on pressed keys"""
+        # Check if we should steer left or right
+        if keyboard.Key.left in self.keys_pressed:
+            self.current_steering = min(self.max_steering_angle, self.current_steering + self.steering_step)
+        elif keyboard.Key.right in self.keys_pressed:
+            self.current_steering = max(-self.max_steering_angle, self.current_steering - self.steering_step)
+        else:
+            #   Gradually return to center when no steering keys are pressed
+             if abs(self.current_steering) > 0.01:
+                 sign = 1 if self.current_steering > 0 else -1
+                 self.current_steering = sign * max(0, abs(self.current_steering) - self.steering_step)
+             else:
+                 self.current_steering = 0.0
+        
+        # Publish steering commands (same angle for both wheels)
+        self.steer_left_pub.publish(Float64(self.current_steering))
+        self.steer_right_pub.publish(Float64(self.current_steering))
+    
     def control_loop(self):
         """Main control loop that publishes wheel commands"""
         rate = rospy.Rate(self.rate)
         prev_left = prev_right = 0.0
+        prev_steering = 0.0
         
         while not rospy.is_shutdown():
             # Calculate current wheel efforts
             left_effort, right_effort = self.calculate_wheel_efforts()
+            
+            # Update steering
+            self.update_steering()
             
             # Only publish if values have changed
             if left_effort != prev_left or right_effort != prev_right:
@@ -107,6 +138,12 @@ class CarKeyboardController:
                     rospy.loginfo(f"Left wheel: {left_effort:.2f}, Right wheel: {right_effort:.2f}")
                 
                 prev_left, prev_right = left_effort, right_effort
+            
+            # Log steering changes if they're significant
+            if abs(self.current_steering - prev_steering) > 0.01:
+                degrees = math.degrees(self.current_steering)
+                rospy.loginfo(f"Steering angle: {degrees:.1f}°")
+                prev_steering = self.current_steering
             
             rate.sleep()
     
@@ -128,9 +165,11 @@ class CarKeyboardController:
         except KeyboardInterrupt:
             rospy.loginfo("Interrupted by user")
         finally:
-            # Stop wheels when shutting down
+            # Stop wheels and center steering when shutting down
             self.back_left_pub.publish(Float64(0.0))
             self.back_right_pub.publish(Float64(0.0))
+            self.steer_left_pub.publish(Float64(0.0))
+            self.steer_right_pub.publish(Float64(0.0))
             keyboard_listener.stop()
             rospy.loginfo("Controller stopped")
 

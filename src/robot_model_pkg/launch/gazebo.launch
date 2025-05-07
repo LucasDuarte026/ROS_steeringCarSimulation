@@ -33,7 +33,9 @@
         ns="/car"
         args="joint_state_controller
         back_left_wheel_effort_controller
-        back_right_wheel_effort_controller" />
+        back_right_wheel_effort_controller
+        front_left_wheel_effort_controller
+        front_right_wheel_effort_controller" />
 
 
     <!-- Convert joint states to TF transforms for rviz, etc -->
