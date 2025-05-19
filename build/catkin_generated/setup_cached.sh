@@ -8,4 +8,3 @@
 
 # modified environment variables
 export PWD='/home/luska/Documents/IntelligentRobotics/build'
-export ROS_PACKAGE_PATH='/mnt/c/Documents and Settings/micro/OneDrive/Documentos/hof/robotics/car_project/src:/home/luska/car_project_link/src:/home/luska/Documents/IntelligentRobotics/src:/opt/ros/noetic/share'

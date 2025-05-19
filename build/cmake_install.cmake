@@ -118,6 +118,21 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/luska/Documents/IntelligentRobotics/install/setup.fish;/home/luska/Documents/IntelligentRobotics/install/local_setup.fish")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/luska/Documents/IntelligentRobotics/install" TYPE FILE FILES
+    "/home/luska/Documents/IntelligentRobotics/build/catkin_generated/installspace/setup.fish"
+    "/home/luska/Documents/IntelligentRobotics/build/catkin_generated/installspace/local_setup.fish"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
    "/home/luska/Documents/IntelligentRobotics/install/.rosinstall")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
@@ -131,9 +146,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/luska/Documents/IntelligentRobotics/build/gtest/cmake_install.cmake")
-  include("/home/luska/Documents/IntelligentRobotics/build/first_attempt/cmake_install.cmake")
-  include("/home/luska/Documents/IntelligentRobotics/build/robot_model_pkg/cmake_install.cmake")
-  include("/home/luska/Documents/IntelligentRobotics/build/car_description/cmake_install.cmake")
+  include("/home/luska/Documents/IntelligentRobotics/build/steering_car/cmake_install.cmake")
 
 endif()
 

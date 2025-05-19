@@ -5,6 +5,4 @@
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
-subdirs("first_attempt")
-subdirs("robot_model_pkg")
-subdirs("car_description")
+subdirs("steering_car")
