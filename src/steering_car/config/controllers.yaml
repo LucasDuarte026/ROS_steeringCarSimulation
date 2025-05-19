@@ -18,5 +18,5 @@ car:
   
   front_wheels_effort_controller:
     type: effort_controllers/JointEffortController
-    joint: front_steer_joint
+    joint: steering_cylinder_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
