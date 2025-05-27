@@ -43,7 +43,15 @@
     </plugin>
   </gazebo>
 
+<!-- For bringing colors to the main simulation -->
+ <gazebo>
+    <plugin name="gazebo_ros_material_plugin" filename="libgazebo_ros_api_plugin.so">
+      <robotNamespace>/car</robotNamespace>
+    </plugin>
+  </gazebo>
 
+
+  
   <!-- Dummy and Base Link -->
   <link name="dummy"> </link>
   <joint name="dummy_joint" type="fixed">
@@ -359,6 +367,8 @@
     </actuator>
   </transmission>
 
+
+  
   <!-- Gazebo friction parameters -->
   <gazebo reference="base_link">
     <mu1>0.2</mu1>
