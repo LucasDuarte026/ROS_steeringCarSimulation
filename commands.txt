@@ -6,8 +6,12 @@ cd /project_folder
 
 source devel/setup.bash 
 
- -- for seeing the car
+-- for seeing the car
     roslaunch robot_model_pkg view_car.launch 
 
- -- for launch the car simulations
+-- for launch the car simulations
     roslaunch robot_model_pkg view_car.launch 
+
+
+-- launch the camera
+      rosrun rqt_image_view rqt_image_view  /car/car_camera/image_raw

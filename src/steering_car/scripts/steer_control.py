@@ -26,7 +26,6 @@ class CarKeyboardController:
 
         # Track key states
         self.keys_pressed = set()
-
         # Control loop rate (Hz)
         self.rate = 20
 
@@ -133,8 +132,7 @@ class CarKeyboardController:
 
             # Log steering changes if they're significant
             if abs(self.current_steering - prev_steering) > 0.01:
-                degrees = math.degrees(self.current_steering)
-                rospy.loginfo(f"Steering angle: {degrees:.1f}°")
+                rospy.loginfo(f"Steering effort: {self.current_steering:.1f}°")
                 prev_steering = self.current_steering
 
             rate.sleep()
