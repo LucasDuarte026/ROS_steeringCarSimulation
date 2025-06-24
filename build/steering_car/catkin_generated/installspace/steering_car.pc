@@ -1,4 +1,4 @@
-prefix=/home/luska/Documents/IntelligentRobotics/install
+prefix=/home/joaomarcelo/Documents/IntelligentRobotics/install
 
 Name: steering_car
 Description: Description of steering_car

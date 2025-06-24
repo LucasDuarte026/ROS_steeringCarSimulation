@@ -7,4 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/luska/Documents/IntelligentRobotics/build'
+export LD_LIBRARY_PATH='/opt/ros/noetic/lib'
+export PKG_CONFIG_PATH='/opt/ros/noetic/lib/pkgconfig'
+export PWD='/home/joaomarcelo/Documents/IntelligentRobotics/build'
+export ROS_PACKAGE_PATH='/home/joaomarcelo/Documents/IntelligentRobotics/src:/opt/ros/noetic/share'

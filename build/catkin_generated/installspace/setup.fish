@@ -18,7 +18,7 @@ if not type -q bass
 end
 
 if test -z $_CATKIN_SETUP_DIR
-    set _CATKIN_SETUP_DIR /home/luska/Documents/IntelligentRobotics/install
+    set _CATKIN_SETUP_DIR /home/joaomarcelo/Documents/IntelligentRobotics/install
 end
 
 set _SETUP_UTIL "$_CATKIN_SETUP_DIR/_setup_util.py"

@@ -375,19 +375,19 @@
     <mu2>0.2</mu2>
   </gazebo>
   <gazebo reference="back_right_wheel_link">
-    <mu1>5.0</mu1>
-    <mu2>5.0</mu2>
+    <mu1>25.0</mu1>
+    <mu2>25.0</mu2>
   </gazebo>
   <gazebo reference="back_left_wheel_link">
-    <mu1>5.0</mu1>
-    <mu2>5.0</mu2>
+    <mu1>25.0</mu1>
+    <mu2>25.0</mu2>
   </gazebo>
   <gazebo reference="front_right_wheel_link">
-    <mu1>5.0</mu1>
-    <mu2>5.0</mu2>
+    <mu1>25.0</mu1>
+    <mu2>25.0</mu2>
   </gazebo>
   <gazebo reference="front_left_wheel_link">
-    <mu1>5.0</mu1>
-    <mu2>5.0</mu2>
+    <mu1>25.0</mu1>
+    <mu2>25.0</mu2>
   </gazebo>
 </robot>

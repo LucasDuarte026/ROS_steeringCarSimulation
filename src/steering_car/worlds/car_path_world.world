@@ -1,138 +1,182 @@
 <?xml version="1.0" ?>
-<sdf version="1.7">
-  <world name="default">
+<sdf version='1.7'>
+  <world name='default'>
 
-    <!-- ========== CONFIGURAÇÕES GERAIS ========== -->
-    <scene>
-      <ambient>0.5 0.5 0.5 1</ambient>
-      <background>0.7 0.7 0.7 1</background>
-      <shadows>true</shadows>
-    </scene>
-
-    <light name="sun" type="directional">
+    <!-- Luz solar -->
+    <light name='sun' type='directional'>
       <cast_shadows>true</cast_shadows>
-      <pose>0 0 15 0 0 0</pose>
-      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
       <direction>-0.5 0.1 -0.9</direction>
     </light>
 
+    <!-- Chão com textura de estrada -->
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Road</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Física e iluminação -->
+    <gravity>0 0 -9.8</gravity>
     <physics type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>1000</real_time_update_rate>
     </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
 
-    <!-- ========== ESTRUTURA DO PRÉDIO ========== -->
+    <!-- Câmera inicial -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>0 -40 20 0 0.5 1.5707</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
 
-    <!-- PISO TÉRREO (15m x 15m) -->
-    <model name='piso_terreo'>
+    <!-- Paredes ampliadas (arena 50x50 metros) -->
+    <model name='wall_back'>
       <static>true</static>
-      <pose>0 0 0.05 0 0 0</pose>
+      <pose>0 25 0.5 0 0 0</pose>
       <link name='link'>
-        <collision name='collision'><geometry><box><size>15 15 0.1</size></box></geometry></collision>
-        <visual name='visual'><geometry><box><size>15 15 0.1</size></box></geometry>
-          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/WoodFloor</name></script></material>
+        <collision name='collision'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
         </visual>
       </link>
     </model>
 
-    <!-- PISO SUPERIOR (15m x 15m) -->
-    <model name='piso_superior'>
+    <model name='wall_front'>
       <static>true</static>
-      <pose>0 0 3.05 0 0 0</pose>
+      <pose>0 -25 0.5 0 0 0</pose>
       <link name='link'>
-        <collision name='collision'><geometry><box><size>15 15 0.1</size></box></geometry></collision>
-        <visual name='visual'><geometry><box><size>15 15 0.1</size></box></geometry>
-          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/WoodFloor</name></script></material>
+        <collision name='collision'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
         </visual>
       </link>
     </model>
 
-    <!-- RAMPA DE ACESSO -->
-    <!-- Altura: 3m, Comprimento horizontal: 10m, Inclinação: ~16.7 graus -->
-    <model name='rampa'>
+    <model name='wall_left'>
       <static>true</static>
-      <pose>2.5 0 1.5 0 0.291457 0</pose> <!-- 0.291 rad = 16.7 graus de inclinação (pitch) -->
+      <pose>-25 0 0.5 0 0 1.5707</pose>
       <link name='link'>
-        <collision name='collision'><geometry><box><size>10.44 4 0.1</size></box></geometry></collision>
-        <visual name='visual'><geometry><box><size>10.44 4 0.1</size></box></geometry>
-          <material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material>
+        <collision name='collision'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
         </visual>
       </link>
     </model>
 
-    <!-- PAREDES DE VIDRO (TÉRREO) -->
-    <model name='parede_vidro_norte_t'>
-      <static>true</static><pose>0 7.5 1.5 0 0 0</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
-    </model>
-    <model name='parede_vidro_sul_t'>
-      <static>true</static><pose>0 -7.5 1.5 0 0 0</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
-    </model>
-    <model name='parede_vidro_leste_t'>
-      <static>true</static><pose>7.5 0 1.5 0 0 1.57</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
-    </model>
-    <model name='parede_vidro_oeste_t'>
-      <static>true</static><pose>-7.5 0 1.5 0 0 1.57</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
+    <model name='wall_right'>
+      <static>true</static>
+      <pose>25 0 0.5 0 0 1.5707</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>50 0.2 1</size></box></geometry>
+        </visual>
+      </link>
     </model>
 
-    <!-- PAREDES DE VIDRO (SUPERIOR) -->
-    <model name='parede_vidro_norte_s'>
-      <static>true</static><pose>0 7.5 4.5 0 0 0</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
-    </model>
-    <model name='parede_vidro_sul_s'>
-      <static>true</static><pose>0 -7.5 4.5 0 0 0</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
-    </model>
-    <model name='parede_vidro_leste_s'>
-      <static>true</static><pose>7.5 0 4.5 0 0 1.57</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
-    </model>
-    <model name='parede_vidro_oeste_s'>
-      <static>true</static><pose>-7.5 0 4.5 0 0 1.57</pose>
-      <link name='link'><visual name='visual'><geometry><box><size>15 0.1 3</size></box></geometry><material><script><name>Gazebo/WhiteTransparent</name></script></material></visual>
-      <collision name='collision'><geometry><box><size>15 0.1 3</size></box></geometry></collision></link>
+    <!-- Obstáculos mais afastados -->
+    <model name='obstacle_cylinder_1'>
+      <pose>10 10 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><cylinder><radius>0.5</radius><length>1</length></cylinder></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><cylinder><radius>0.5</radius><length>1</length></cylinder></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
+        </visual>
+      </link>
     </model>
 
-    <!-- ========== MOBILIÁRIO E OBSTÁCULOS ========== -->
+    <model name='obstacle_box_1'>
+      <pose>-10 -10 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1 1 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1 1 1</size></box></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
 
-    <!-- Mobília do Térreo -->
-    <include>
-      <name>sofa_terreo</name>
-      <uri>model://sofa</uri>
-      <pose>-5 -5 0.1 0 0 1.57</pose>
-    </include>
-
-    <include>
-      <name>mesa_centro_terreo</name>
-      <uri>model://cafe_table</uri>
-      <pose>-2.5 -5 0.1 0 0 0</pose>
-    </include>
-
-    <!-- Mobília do Andar Superior -->
-    <include>
-      <name>poltrona_superior</name>
-      <uri>model://armchair</uri>
-      <pose>5 5 3.1 0 0 -0.8</pose>
-    </include>
-
-    <include>
-      <name>estante_superior</name>
-      <uri>model://bookshelf</uri>
-      <pose>-5 6.5 3.1 0 0 0</pose>
-    </include>
+    <!-- Obstáculos extras para treino -->
+    <model name='obstacle_box_2'>
+      <pose>15 -5 0.5 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2 2 1</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2 2 1</size></box></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
 
   </world>
 </sdf>
