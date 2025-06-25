@@ -24,7 +24,7 @@ class CarKeyboardController:
         self.effort_level = 0.4
         self.steering_ratio = 0.95
         self.current_steering = 0.0
-        self.effort_change_amount = 0.1
+        self.effort_change_amount = 0.05
         self.braking_constant = 0.01
 
         # State Variables
@@ -32,8 +32,7 @@ class CarKeyboardController:
         self.back_right_wheel_velocity = 0.0
         self.last_log_time = time.time()
         self.keys_pressed = set()
-        self.rate = 20
-
+        self.rate = 20   # 20 Hz
         self.display_controls()
 
     def display_controls(self):
@@ -102,6 +101,9 @@ class CarKeyboardController:
             actual_effort = -self.effort_level
         elif keyboard.Key.down in self.keys_pressed:
             actual_effort  = self.effort_level
+        # else:
+        #     actual_effort  = -self.braking_constant * self.back_left_wheel_velocity
+
         return actual_effort
 
     def update_steering(self):

@@ -9,21 +9,16 @@
   <xacro:property name="wheel_radius" value="0.0508" />
   <xacro:property name="wheel_length" value="0.0508" />
   <xacro:property name="wheel_mass" value="0.4" />
-  <xacro:property name="capota_car_length" value="0.2746" />      <!-- x axis  -->
-  <xacro:property name="capota_car_width" value="0.2124" />       <!-- y axis  -->
-  <xacro:property name="capota_car_height" value="0.0508" />      <!-- z axis  -->
-  <xacro:property name="capota_car_mass" value="0.25" />
+  <xacro:property name="capota_car_length" value="0.2746" />      <xacro:property name="capota_car_width" value="0.2124" />       <xacro:property name="capota_car_height" value="0.0508" />      <xacro:property name="capota_car_mass" value="0.25" />
 
   <xacro:property name="steering_cylinder_radius" value="0.01" /> 
   <xacro:property name="steering_cylinder_length" value="0.2124" /> 
   <xacro:property name="steering_cylinder_mass" value="0.05" />  
 
-<!-- control parameters -->
-  <xacro:property name="back_wheels_velocity_limit" value="100.0" />  
+<xacro:property name="back_wheels_velocity_limit" value="100.0" />  
   <xacro:property name="steering_velocity_limit" value="100.0" />  
 
 
-  <!-- Gazebo friction parameters -->
   <gazebo reference="base_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
@@ -45,6 +40,40 @@
     <mu2>100.0</mu2>
   </gazebo>
 
+  <gazebo reference="base_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="capota">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="steering_cylinder_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="front_left_wheel_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="front_right_wheel_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="back_left_wheel_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="back_right_wheel_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="camera_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+
+ <material name="car_body_color"> <color rgba="0.8 0.1 0.1 1" /> </material>
+  <material name="car_capota_color"> <color rgba="0.1 0.1 0.8 1" /> </material>
+  <material name="steering_color"> <color rgba="0.3 0.3 0.3 1" /> </material>
+  <material name="wheel_main_color"> <color rgba="0.2 0.2 0.2 1" /> </material>
+  <material name="wheel_stripe_color"> <color rgba="1.0 1.0 0.0 1" /> </material>
+  <material name="camera_color"> <color rgba="0.1 0.1 0.1 1" /> </material>
+
+
   <material name="green">
     <color rgba="0 1 0 1" />
   </material>
@@ -65,17 +94,7 @@
     </plugin>
   </gazebo>
 
-<!-- For bringing colors to the main simulation -->
- <gazebo>
-    <plugin name="gazebo_ros_material_plugin" filename="libgazebo_ros_api_plugin.so">
-      <robotNamespace>/car</robotNamespace>
-    </plugin>
-  </gazebo>
-
-
-  
-  <!-- Dummy and Base Link -->
-  <link name="dummy"> </link>
+<link name="dummy"> </link>
   <joint name="dummy_joint" type="fixed">
     <parent link="dummy" />
     <child link="base_link" />
@@ -85,7 +104,7 @@
       <geometry>
         <box size="${car_length} ${car_width} ${car_height}" />
       </geometry>
-      <material name="green" />
+      <material name="car_body_color" />
     </visual>
     <collision>
       <geometry>
@@ -104,13 +123,12 @@
     </inertial>
   </link>
 
-<!-- Capota of car -->
-  <link name="capota">
+<link name="capota">
     <visual>
       <geometry>
         <box size="${capota_car_length} ${capota_car_width} ${capota_car_height}" />
       </geometry>
-      <material name="light_green" />
+      <material name="car_capota_color" />
     </visual>
     <collision>
       <geometry>
@@ -136,13 +154,12 @@
   </joint>
 
 
-<!-- Steering cylinder axis -->
 <link name="steering_cylinder_link">
     <visual>
       <geometry>
         <cylinder radius="${steering_cylinder_radius}" length="${steering_cylinder_length}"/>
       </geometry>
-      <material name="grey"/>
+      <material name="steering_color"/>
     </visual>
     <collision>
       <geometry>
@@ -169,9 +186,6 @@
   </joint>
 
  
-  <!-- Wheels -->
-
-  <!-- Front Left Wheel -->
   <link name="front_left_wheel_link">
     <visual>
       <geometry>
@@ -201,9 +215,7 @@
     <axis xyz="0 0 1"/>
   </joint>
  
-<!-- Front Right Wheel -->
- 
-  <link name="front_right_wheel_link">
+<link name="front_right_wheel_link">
     <visual>
       <geometry>
         <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
@@ -235,7 +247,6 @@
 
 
 
-  <!-- back_left_wheel -->
   <link name="back_left_wheel_link">
     <visual>
       <geometry>
@@ -267,7 +278,6 @@
     <limit effort="10.0" velocity="${back_wheels_velocity_limit}" />
   </joint>
 
-  <!-- back_right_wheel -->
   <link name="back_right_wheel_link">
     <visual>
       <geometry>
@@ -300,12 +310,11 @@
     <limit effort="10.0" velocity="${back_wheels_velocity_limit}" />
   </joint>
 
-<!-- Camera -->
 <link name="camera_link">
     <visual>
       <geometry>
         <box size="0.02 0.02 0.02"/> </geometry>
-      <material name="grey"/>
+      <material name="camera_color"/>
     </visual>
     <collision>
       <geometry>
