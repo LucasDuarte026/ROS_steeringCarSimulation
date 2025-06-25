@@ -5,23 +5,45 @@
   <xacro:property name="car_length" value="0.3762" />
   <xacro:property name="car_width" value="0.2124" />
   <xacro:property name="car_height" value="0.0762" />
-  <xacro:property name="car_mass" value="1.4" />
+  <xacro:property name="car_mass" value="2.0" />
   <xacro:property name="wheel_radius" value="0.0508" />
   <xacro:property name="wheel_length" value="0.0508" />
-  <xacro:property name="wheel_mass" value="0.1" />
+  <xacro:property name="wheel_mass" value="0.4" />
   <xacro:property name="capota_car_length" value="0.2746" />      <!-- x axis  -->
   <xacro:property name="capota_car_width" value="0.2124" />       <!-- y axis  -->
   <xacro:property name="capota_car_height" value="0.0508" />      <!-- z axis  -->
-  <xacro:property name="capota_car_mass" value="0.3" />
+  <xacro:property name="capota_car_mass" value="0.25" />
 
   <xacro:property name="steering_cylinder_radius" value="0.01" /> 
   <xacro:property name="steering_cylinder_length" value="0.2124" /> 
   <xacro:property name="steering_cylinder_mass" value="0.05" />  
 
 <!-- control parameters -->
-  <xacro:property name="back_wheels_velocity_limit" value="10.0" />  
-  <xacro:property name="steering_velocity_limit" value="5.0" />  
+  <xacro:property name="back_wheels_velocity_limit" value="100.0" />  
+  <xacro:property name="steering_velocity_limit" value="100.0" />  
 
+
+  <!-- Gazebo friction parameters -->
+  <gazebo reference="base_link">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+  <gazebo reference="back_right_wheel_link">
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+  </gazebo>
+  <gazebo reference="back_left_wheel_link">
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+  </gazebo>
+  <gazebo reference="front_right_wheel_link">
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+  </gazebo>
+  <gazebo reference="front_left_wheel_link">
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+  </gazebo>
 
   <material name="green">
     <color rgba="0 1 0 1" />
@@ -143,7 +165,7 @@
     <child link="steering_cylinder_link"/>
     <origin xyz="${car_length/2-car_length/16} 0  ${-car_height/2}" rpy="${pi/2} 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="${-pi/16}" upper="${pi/16}" effort="10.0" velocity="${steering_velocity_limit}"/>
+    <limit lower="${-pi/8}" upper="${pi/8}" effort="10.0" velocity="${steering_velocity_limit}"/>
   </joint>
 
  
@@ -366,28 +388,4 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-
-
-  
-  <!-- Gazebo friction parameters -->
-  <gazebo reference="base_link">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-  </gazebo>
-  <gazebo reference="back_right_wheel_link">
-    <mu1>100.0</mu1>
-    <mu2>100.0</mu2>
-  </gazebo>
-  <gazebo reference="back_left_wheel_link">
-    <mu1>100.0</mu1>
-    <mu2>100.0</mu2>
-  </gazebo>
-  <gazebo reference="front_right_wheel_link">
-    <mu1>100.0</mu1>
-    <mu2>100.0</mu2>
-  </gazebo>
-  <gazebo reference="front_left_wheel_link">
-    <mu1>100.0</mu1>
-    <mu2>100.0</mu2>
-  </gazebo>
 </robot>
