@@ -5,7 +5,7 @@
   <xacro:property name="car_length" value="0.3762" />
   <xacro:property name="car_width" value="0.2124" />
   <xacro:property name="car_height" value="0.0762" />
-  <xacro:property name="car_mass" value="0.7" />
+  <xacro:property name="car_mass" value="1.4" />
   <xacro:property name="wheel_radius" value="0.0508" />
   <xacro:property name="wheel_length" value="0.0508" />
   <xacro:property name="wheel_mass" value="0.1" />
@@ -19,7 +19,7 @@
   <xacro:property name="steering_cylinder_mass" value="0.05" />  
 
 <!-- control parameters -->
-  <xacro:property name="back_wheels_velocity_limit" value="100.0" />  
+  <xacro:property name="back_wheels_velocity_limit" value="10.0" />  
   <xacro:property name="steering_velocity_limit" value="5.0" />  
 
 
@@ -375,19 +375,19 @@
     <mu2>0.2</mu2>
   </gazebo>
   <gazebo reference="back_right_wheel_link">
-    <mu1>25.0</mu1>
-    <mu2>25.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
   </gazebo>
   <gazebo reference="back_left_wheel_link">
-    <mu1>25.0</mu1>
-    <mu2>25.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
   </gazebo>
   <gazebo reference="front_right_wheel_link">
-    <mu1>25.0</mu1>
-    <mu2>25.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
   </gazebo>
   <gazebo reference="front_left_wheel_link">
-    <mu1>25.0</mu1>
-    <mu2>25.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
   </gazebo>
 </robot>

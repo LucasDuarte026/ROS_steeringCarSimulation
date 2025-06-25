@@ -58,13 +58,17 @@ while not rospy.is_shutdown():
 
     cv2.putText(img, f"Gesture: {gesture}", (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 3)
 
-    if gesture != last_gesture and gesture != "wait":
+    if gesture != last_gesture :
         # Mapear gesto para esforço das rodas e direção
-        if gesture == "forward":
+        if gesture == "wait":
+            steering_effort = 0.0
+            left_effort = right_effort = 0.0
+
+        elif gesture == "forward":
             left_effort = right_effort = -effort_level
             steering_effort = 0.0
         elif gesture == "stop":
-            left_effort = right_effort = 0.0
+            left_effort = right_effort = effort_level
             steering_effort = 0.0
         elif gesture == "left":
             left_effort = right_effort = 0.0

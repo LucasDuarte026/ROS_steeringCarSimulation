@@ -21,7 +21,6 @@
         args="-urdf -model car -param robot_description -x 0 -y 0 -z 0.5" />
 
     <!-- Load controller parameters -->
-
     <rosparam file="$(find robot_model_pkg)/config/controllers.yaml" command="load" />
 
     <!-- Load and start the controllers -->
