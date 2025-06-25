@@ -47,5 +47,12 @@
         <remap from="/joint_states" to="/car/joint_states" />
     </node>
 
+    <!-- Launching the basic keyboard control -->
+    <!-- <node name="KeyboardControl"
+        pkg="steering_car"
+        type="steer_control.py"
+        output="screen">
+    </node> -->
+
 
 </launch>

@@ -21,8 +21,8 @@ class CarKeyboardController:
         
         # Parameters
         self.max_effort = 2.0
-        self.effort_level = 0.4
-        self.steering_ratio = 0.95
+        self.effort_level = 0.6
+        self.steering_ratio = 1.5
         self.current_steering = 0.0
         self.effort_change_amount = 0.05
         self.braking_constant = 0.01
@@ -94,16 +94,13 @@ class CarKeyboardController:
         """Calculate wheel efforts based on pressed keys"""
         actual_effort = 0.0
         if keyboard.KeyCode(char='p') in self.keys_pressed:      
-            #Apply proportional braking effort to both wheels
             actual_effort  = -self.braking_constant * self.back_left_wheel_velocity
-
         elif keyboard.Key.up in self.keys_pressed:
             actual_effort = -self.effort_level
         elif keyboard.Key.down in self.keys_pressed:
             actual_effort  = self.effort_level
-        # else:
-        #     actual_effort  = -self.braking_constant * self.back_left_wheel_velocity
-
+        else:
+            actual_effort  = -self.braking_constant * self.back_left_wheel_velocity * 0.50
         return actual_effort
 
     def update_steering(self):
@@ -134,23 +131,14 @@ class CarKeyboardController:
 
                 self.back_left_pub.publish(Float64(actual_effort))
                 self.back_right_pub.publish(Float64(actual_effort))
-                # if  actual_effort != prev_effort:
-
-        
-                #     if  actual_effort == 0:
-                #         rospy.loginfo("Stopping")
-                #     else:
-                #         rospy.loginfo(f"Driving effort (actual_effort): {actual_effort:.2f}")
-
-                #     prev_effort =  actual_effort
-
+                
                 if abs(self.current_steering - prev_steering) > 0.01:
                     rospy.loginfo(f"Steering effort: {self.current_steering:.1f}°")
                     prev_steering = self.current_steering
 
-                print(f"Left wheel velocity: {self.back_left_wheel_velocity:.2f} | actual_effort : {actual_effort:.2f}")
                 current_time = time.time()
                 if current_time - self.last_log_time >= 1.0:
+                # print(f"Left wheel velocity: {self.back_left_wheel_velocity:.2f} | actual_effort : {actual_effort:.2f}")
                     self.last_log_time = current_time
                 
                 rate.sleep()
