@@ -6,7 +6,7 @@ Additionally, the project includes a computer vision node for object detection a
 
 ---
 
-## 🔑 Key Features
+## 1. Key Features
 
 - **Gazebo Simulation:** A realistic car model simulated in a custom Gazebo world.  
 - **ROS Control:** Utilizes `ros_control` for managing joint controllers (effort-based).  
@@ -19,7 +19,7 @@ Additionally, the project includes a computer vision node for object detection a
 
 ---
 
-## 🧱 System Architecture
+## 2. System Architecture
 
 The project is composed of several nodes that communicate via ROS topics.
 
@@ -37,7 +37,7 @@ The project is composed of several nodes that communicate via ROS topics.
 
 ---
 
-## 📦 Prerequisites
+## 3. Prerequisites
 
 - **Ubuntu 20.04**  
 - **ROS Noetic Ninjemys** (desktop-full installation recommended)  
@@ -51,7 +51,7 @@ The project is composed of several nodes that communicate via ROS topics.
 
 ---
 
-## ⚙️ Installation & Setup
+## 4. Installation & Setup
 
 This repository contains a complete Catkin workspace.
 
@@ -165,7 +165,7 @@ rosrun steering_car collision_detection.py
 
 ---
 
-## 📁 Project Structure
+## 5. Project Structure
 
 ```
 steering_car/
