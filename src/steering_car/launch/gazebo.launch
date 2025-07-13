@@ -1,11 +1,8 @@
 <launch>
-    <!-- Load the URDF into the ROS Parameter Server -->
     <param name="robot_description"
         command="$(find xacro)/xacro '$(find steering_car)/urdf/car.xacro'" />
 
-    <!-- Launch Gazebo -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <!-- <arg name="world_name" value="worlds/empty.world" /> -->
         <arg name="world_name" value="$(find steering_car)/worlds/car_path_world.world" />
         <arg name="paused" value="false" />
         <arg name="use_sim_time" value="true" />
@@ -13,19 +10,15 @@
         <arg name="headless" value="false" />
         <arg name="debug" value="false" />
     </include>
-    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+
     <node name="urdf_spawner"
         pkg="gazebo_ros"
         type="spawn_model"
         respawn="false"
         output="screen"
         args="-urdf -model car -param robot_description -x 0 -y 0 -z 0.5" />
+        <rosparam file="$(find steering_car)/config/controllers.yaml" command="load" />
 
-    <!-- Load controller parameters -->
-
-    <rosparam file="$(find steering_car)/config/controllers.yaml" command="load" />
-
-    <!-- Load and start the controllers -->
     <node name="controller_spawner"
         pkg="controller_manager"
         type="spawner"
@@ -33,12 +26,10 @@
         output="screen"
         ns="/car"
         args="joint_state_controller
-        back_left_wheel_effort_controller
-        back_right_wheel_effort_controller
-        front_wheels_effort_controller" />
+              back_left_wheel_effort_controller
+              back_right_wheel_effort_controller
+              front_wheels_effort_controller" />
 
-
-    <!-- Convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher"
         pkg="robot_state_publisher"
         type="robot_state_publisher"
@@ -47,12 +38,4 @@
         <remap from="/joint_states" to="/car/joint_states" />
     </node>
 
-    <!-- Launching the basic keyboard control -->
-    <!-- <node name="KeyboardControl"
-        pkg="steering_car"
-        type="steer_control.py"
-        output="screen">
-    </node> -->
-
-
-</launch>
+    </launch>

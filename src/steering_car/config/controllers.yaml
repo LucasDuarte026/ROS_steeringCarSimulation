@@ -1,22 +1,27 @@
 car:
-  # Publish all joint states
+  # Joint State Controller
+  # Publishes the state of all joints in the robot model.
+  # This is essential for RViz and other tools to visualize the robot's current state.
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 50
+    publish_rate: 50  # Rate in Hz at which the joint states are published.
 
-  # Back wheel effort controllers'
+  # Back wheel effort controllers
+  # These controllers apply effort (torque) to the rear wheels to make the car move.
   back_left_wheel_effort_controller:
-    type: effort_controllers/JointEffortController
-    joint: back_left_wheel_joint
-    pid: {p: 100.0, i: 0.01, d: 10.0}
-  
+    type: effort_controllers/JointEffortController # Specifies the controller type.
+    joint: back_left_wheel_joint                   # The joint this controller will command.
+    pid: {p: 100.0, i: 0.01, d: 10.0}             # PID gains for the effort control loop. P: Proportional, I: Integral, D: Derivative.
+
   back_right_wheel_effort_controller:
     type: effort_controllers/JointEffortController
     joint: back_right_wheel_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
 
-
+  # Front steering effort controller
+  # This controller applies effort to the steering mechanism.
+  # It controls the angle of the front wheels.
   front_wheels_effort_controller:
     type: effort_controllers/JointEffortController
-    joint: steering_cylinder_joint
+    joint: steering_cylinder_joint # The joint that controls the steering.
     pid: {p: 100.0, i: 0.01, d: 10.0}

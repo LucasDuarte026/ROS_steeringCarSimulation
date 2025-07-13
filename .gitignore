@@ -1,2 +1,19 @@
+# ROS Catkin Workspace
 build/
 devel/
+install/
+logs/
+
+# Default python
+*.pyc
+__pycache__/
+
+# Common files
+*~
+*.swp
+*.swo
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.DS_Store

@@ -9,7 +9,10 @@
   <xacro:property name="wheel_radius" value="0.0508" />
   <xacro:property name="wheel_length" value="0.0508" />
   <xacro:property name="wheel_mass" value="0.6"/>
-  <xacro:property name="capota_car_length" value="0.2746" />      <xacro:property name="capota_car_width" value="0.2124" />       <xacro:property name="capota_car_height" value="0.0508" />      <xacro:property name="capota_car_mass" value="0.25" />
+  <xacro:property name="capota_car_length" value="0.2746" />     
+  <xacro:property name="capota_car_width" value="0.2124" />       
+  <xacro:property name="capota_car_height" value="0.0508" />      
+  <xacro:property name="capota_car_mass" value="0.25" />
 
   <xacro:property name="steering_cylinder_radius" value="0.01" /> 
   <xacro:property name="steering_cylinder_length" value="0.2124" /> 

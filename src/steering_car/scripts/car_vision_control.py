@@ -1,72 +1,89 @@
 #!/usr/bin/env python3
+# Standard library imports
 import cv2
+import time
+
+# Third-party imports
 import mediapipe as mp
+
+# ROS-related imports
 import rospy
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
-import time
 
 class HandGestureController:
+    """
+    This class uses a webcam to detect hand gestures and translate them into
+    control commands for a simulated car in ROS. It uses the MediaPipe library
+    for hand tracking and publishes effort commands to ROS controllers.
+    """
     def __init__(self):
-        # --- Inicialização do ROS ---
+        # --- ROS Initialization ---
+        # Initialize the ROS node with a unique name.
         rospy.init_node('hand_gesture_controller', anonymous=True)
 
-        # Publishers para as rodas e direção
+        # Publishers for the wheel and steering effort controllers.
+        # These topics correspond to the controllers defined in 'controllers.yaml'.
         self.back_left_pub = rospy.Publisher('/car/back_left_wheel_effort_controller/command', Float64, queue_size=1)
         self.back_right_pub = rospy.Publisher('/car/back_right_wheel_effort_controller/command', Float64, queue_size=1)
         self.steer_pub = rospy.Publisher('/car/front_wheels_effort_controller/command', Float64, queue_size=1)
 
-        # Subscriber para obter a velocidade das rodas (essencial para o freio)
+        # Subscriber to get the current velocity of the wheels.
+        # This is essential for the proportional braking logic.
         rospy.Subscriber('/car/joint_states', JointState, self.joint_state_callback, queue_size=1)
-        
-        # --- Parâmetros de Controle (similares ao do teclado) ---
-        self.effort_level = 0.3      # Potência base para aceleração/ré
-        self.steering_ratio = 1.5    # Quão "forte" o carro vira
-        self.braking_constant = 0.01 # Constante para o freio proporcional
 
-        # --- Variáveis de Estado ---
-        self.back_left_wheel_velocity = 0.0
-        self.hand_detected = False
-        
-        # --- Inicialização do MediaPipe e Câmera ---
+        # --- Control Parameters ---
+        self.effort_level = 0.3      # Base power for acceleration/reverse.
+        self.steering_ratio = 1.5    # Multiplier for how sharply the car turns.
+        self.braking_constant = 0.01 # Proportional constant for braking when no hand is detected.
+
+        # --- State Variables ---
+        self.back_left_wheel_velocity = 0.0 # Stores the current wheel velocity.
+        self.hand_detected = False          # Flag to track if a hand is currently in the frame.
+
+        # --- MediaPipe and Camera Initialization ---
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7)
         self.mp_draw = mp.solutions.drawing_utils
-        self.cap = cv2.VideoCapture(0)
-        
-        # Frequência do loop de controle
+        self.cap = cv2.VideoCapture(0) # Initialize webcam capture.
+
+        # Set the frequency of the control loop.
         self.rate = rospy.Rate(20) # 20 Hz
 
-        # Garante que o carro pare ao desligar o nó
+        # Register the cleanup function to be called on node shutdown (e.g., Ctrl+C).
         rospy.on_shutdown(self.cleanup)
-        
+
         rospy.loginfo("=== Hand Gesture Controller Ready ===")
         rospy.loginfo("Move your hand into the camera frame to control the car.")
         rospy.loginfo("Close the window or press Ctrl+C to exit.")
 
     def joint_state_callback(self, msg):
-        """Callback para atualizar a velocidade das rodas."""
+        """
+        Callback function for the /car/joint_states subscriber.
+        Updates the current velocity of the back left wheel.
+        """
         try:
-            # Usamos a velocidade da roda esquerda como referência para o freio
+            # Find the index of the back left wheel joint in the message.
             idx = msg.name.index('back_left_wheel_joint')
+            # Store its velocity. We use this as a reference for braking.
             self.back_left_wheel_velocity = msg.velocity[idx]
-        except (ValueError, IndexError) as e:
-            # Acontece se o joint_state não vier como esperado
+        except (ValueError, IndexError):
+            # This can happen if the joint_state message is not as expected.
             pass
 
     def detect_gesture_grid(self, x, y, width, height):
         """
-        Detecta o gesto com base em uma grade 3x2 na tela (sem zona morta).
-        Retorna uma tupla (comando_aceleracao, comando_direcao).
+        Determines the control command based on the hand's position in a 3x2 grid.
+        Returns a tuple (throttle_command, steer_command).
         """
-        # <<< MUDANÇA: Apenas uma linha divisória horizontal, no meio da tela >>>
+        # Define the vertical line for forward/backward separation (middle of the screen).
         middle_line_y = height * 0.5
-        
-        # Limites horizontais (continuam os mesmos, dividindo em 3 colunas)
+
+        # Define the horizontal lines for left/center/right separation.
         left_bound = width * 0.33
         right_bound = width * 0.66
 
-        # Zona Superior (Acelerar para frente)
+        # Top Zone (Forward)
         if y < middle_line_y:
             if x < left_bound:
                 return "forward", "left"
@@ -74,8 +91,7 @@ class HandGestureController:
                 return "forward", "right"
             else:
                 return "forward", "center"
-        
-        # Zona Inferior (Dar ré)
+        # Bottom Zone (Backward)
         else:
             if x < left_bound:
                 return "backward", "left"
@@ -85,91 +101,104 @@ class HandGestureController:
                 return "backward", "center"
 
     def draw_grid(self, img, width, height):
-        """Desenha a grade 3x2 na imagem para visualização."""
-        # <<< MUDANÇA: Desenha apenas uma linha horizontal no meio >>>
+        """Draws the control grid on the camera image for user feedback."""
+        # Calculate grid boundaries.
         middle_line_y = int(height * 0.5)
-        
         left_bound = int(width * 0.33)
         right_bound = int(width * 0.66)
-        
-        # Linha horizontal central (um pouco mais grossa para destaque)
+
+        # Draw a thick horizontal line to separate forward/backward.
         cv2.line(img, (0, middle_line_y), (width, middle_line_y), (0, 255, 255), 2)
-        
-        # Linhas verticais (sem alteração)
+
+        # Draw vertical lines to separate left/center/right.
         cv2.line(img, (left_bound, 0), (left_bound, height), (0, 255, 255), 1)
         cv2.line(img, (right_bound, 0), (right_bound, height), (0, 255, 255), 1)
+
     def run(self):
-        """Loop principal de controle."""
+        """Main control loop."""
         while not rospy.is_shutdown() and self.cap.isOpened():
             success, img = self.cap.read()
             if not success:
                 continue
+
+            # Flip the image horizontally for a more intuitive "mirror" effect.
             img = cv2.flip(img, 1)
             h, w, _ = img.shape
+            # Convert the BGR image to RGB for MediaPipe processing.
             img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             results = self.hands.process(img_rgb)
 
+            # Default commands if no hand is detected
             throttle_cmd = "brake"
-            steer_cmd = "center"    
+            steer_cmd = "center"
             self.hand_detected = False
 
             if results.multi_hand_landmarks:
                 self.hand_detected = True
+                # Get the landmarks for the first detected hand.
                 hand_lms = results.multi_hand_landmarks[0]
+                # Draw the hand skeleton on the image.
                 self.mp_draw.draw_landmarks(img, hand_lms, self.mp_hands.HAND_CONNECTIONS)
-                
-                # Usamos o pulso (landmark 0) como referência de posição
+
+                # Use the wrist (landmark 0) as the reference point for position.
                 wrist = hand_lms.landmark[0]
                 cx, cy = int(wrist.x * w), int(wrist.y * h)
-                
+
+                # Determine commands from the wrist's position in the grid.
                 throttle_cmd, steer_cmd = self.detect_gesture_grid(cx, cy, w, h)
 
-            # --- Lógica de Cálculo de Esforço ---
+            # --- Effort Calculation Logic ---
             throttle_effort = 0.0
             steering_effort = 0.0
 
-            # Se a mão não for detectada, aplicamos o freio proporcional
             if not self.hand_detected:
+                # If no hand is detected, apply proportional braking.
+                # The brake effort is opposite to the current velocity.
                 throttle_effort = -self.braking_constant * self.back_left_wheel_velocity
                 throttle_cmd = "braking (no hand)"
             else:
-                # Mapeia os comandos de texto para valores de esforço
+                # Map text commands to numerical effort values.
                 if throttle_cmd == "forward":
-                    throttle_effort = -self.effort_level
+                    throttle_effort = -self.effort_level # Negative for forward movement in Gazebo
                 elif throttle_cmd == "backward":
-                    throttle_effort = self.effort_level
-                # Se for "dead_zone", o esforço permanece 0.0
-                
+                    throttle_effort = self.effort_level  # Positive for backward movement
+
                 if steer_cmd == "left":
                     steering_effort = self.effort_level * self.steering_ratio
                 elif steer_cmd == "right":
                     steering_effort = -self.effort_level * self.steering_ratio
 
-            # --- Publicação dos Comandos ---
+            # --- Publish Commands ---
+            # Publish the calculated effort to the respective controllers.
             self.back_left_pub.publish(Float64(throttle_effort))
             self.back_right_pub.publish(Float64(throttle_effort))
             self.steer_pub.publish(Float64(steering_effort))
 
-            # --- Visualização ---
+            # --- Visualization ---
             self.draw_grid(img, w, h)
+            # Display the current command status on the image.
             display_text = f"Throttle: {throttle_cmd} | Steer: {steer_cmd}"
             cv2.putText(img, display_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
             cv2.imshow("Hand Gesture Control", img)
 
+            # Exit the loop if 'q' is pressed.
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-            
+
+            # Maintain the loop frequency.
             self.rate.sleep()
 
     def cleanup(self):
-        """Função de limpeza para ser chamada no shutdown."""
+        """
+        Function called on node shutdown to safely stop the car and release resources.
+        """
         rospy.loginfo("Shutting down. Stopping the car...")
-        # Envia comando de esforço zero para todas as rodas
+        # Send a zero effort command to all joints to stop the car.
         self.back_left_pub.publish(Float64(0.0))
         self.back_right_pub.publish(Float64(0.0))
         self.steer_pub.publish(Float64(0.0))
-        
-        # Libera a câmera e fecha as janelas
+
+        # Release the camera and destroy all OpenCV windows.
         self.cap.release()
         cv2.destroyAllWindows()
 
@@ -180,5 +209,5 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
     finally:
-        # Garante que a limpeza seja chamada mesmo se houver um erro inesperado
+        # Ensure OpenCV windows are closed even if an unexpected error occurs.
         cv2.destroyAllWindows()

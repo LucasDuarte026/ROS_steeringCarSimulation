@@ -1,17 +1,9 @@
 <launch>
-    <!-- Processa o xacro e publica o modelo -->
-      <param name="robot_description" command="$(find xacro)/xacro '$(find steering_car)/urdf/car.xacro'" />
-    
-    <!-- Publica os TFs do modelo (links e joints) -->
-      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-    
-    <!-- Lança o RViz -->
-      <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find car_description)/launch/view_car.rviz" required="true"/> -->
-      <!-- Para arbrir com o arquivo salvo (commente caso queira abrir do zero) -->
-      <node name="rviz" pkg="rviz" type="rviz" args="-d $(find steering_car)/launch/view_car.rviz" required="true"/>
-    
-    <!-- Lança o nó que publica as transformações do carrinho -->
-      <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+    <param name="robot_description" command="$(find xacro)/xacro '$(find steering_car)/urdf/car.xacro'" />
 
-  </launch>
-  
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find steering_car)/launch/view_car.rviz" required="true"/>
+</launch>
