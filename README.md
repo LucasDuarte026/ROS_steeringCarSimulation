@@ -97,7 +97,7 @@ echo "source ~/IntelligentRobotics/devel/setup.bash" >> ~/.bashrc
 
 ---
 
-## 🚀 Usage
+## 5. Usage
 
 Each of the following commands should be run in a **separate terminal**.  
 **Don't forget to source your workspace** in each one:
@@ -108,7 +108,7 @@ source ~/IntelligentRobotics/devel/setup.bash
 
 ---
 
-### 1. Launch the Main Simulation
+### A. Launch the Main Simulation
 
 ```bash
 roslaunch steering_car gazebo.launch
@@ -116,7 +116,7 @@ roslaunch steering_car gazebo.launch
 
 ---
 
-### 2. Run a Control Node (Choose One)
+### B. Run a Control Node (Choose One)
 
 #### **Option A: Keyboard Control**
 
@@ -154,7 +154,7 @@ rosrun steering_car car_vision_control.py
 
 ---
 
-### 3. (Optional) Run the Distance Estimator
+### C. (Optional) Run the Distance Estimator
 
 This node can be run **alongside** the simulation and a control node.  
 It will open a window showing the car's camera view with bounding boxes and distance estimates for detected vehicles.
@@ -165,7 +165,7 @@ rosrun steering_car collision_detection.py
 
 ---
 
-## 5. Project Structure
+## 6.. Project Structure
 
 ```
 steering_car/
