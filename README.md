@@ -46,7 +46,7 @@ The project is composed of several nodes that communicate via ROS topics.
 - **Python Libraries:**
 
     ```bash
-    pip install opencv-python mediapipe ultralytics pynput
+    pip install opencv-python mediapipe ultralytics pynput rospy
     ```
 
 ---
@@ -78,6 +78,7 @@ catkin_make
 ```
 
 ### Install Python Dependencies
+Due to the nature of the ML libraries, the installation might take a while to complete.
 
 ```bash
 pip install opencv-python mediapipe ultralytics pynput
@@ -177,3 +178,16 @@ steering_car/
 ├── CMakeLists.txt      # Build configuration
 └── package.xml         # Package manifest and dependencies
 ```
+
+---
+
+## 7. Contributors
+
+
+- [Lucas Duarte](https://github.com/LucasDuarte026) 
+- [João Marcelo Ferreira Battaglini](https://github.com/JoaoMFB)   
+- [Daniel Umeda Kuhn](https://github.com/DanielUmedaKuhn)
+
+---
+
+> Contributions are welcome! Feel free to fork the project and submit a pull request.
