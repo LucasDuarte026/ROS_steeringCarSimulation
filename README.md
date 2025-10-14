@@ -1,6 +1,8 @@
-# ROS Steering Car Simulation
+#  ROS Steering Car Simulation 
+> 🇩🇪 Developed in Germany  🇩🇪
+>
 
-This project presents a simulated vehicle in the ROS (Robot Operating System) and Gazebo environment. The primary goal is to explore different methods of robot teleoperation and basic perception. The car is modeled with a steering mechanism and can be controlled via a standard keyboard or through real-time hand gestures captured by a webcam.
+>  This project presents a simulated vehicle in the ROS (Robot Operating System) and Gazebo environment. The primary goal is to explore different methods of robot teleoperation and basic perception. The car is modeled with a steering mechanism and can be controlled via a standard keyboard or through real-time hand gestures captured by a webcam.
 
 Additionally, the project includes a computer vision node for object detection and distance estimation, using a camera sensor and the YOLOv8 model.
 
