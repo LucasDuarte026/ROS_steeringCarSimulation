@@ -7,6 +7,8 @@
 Additionally, the project includes a computer vision node for object detection and distance estimation, using a camera sensor and the YOLOv8 model.
 
 ---
+
+
 <iframe src="https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/embed?start=false&loop=false&delayms=3000" 
         frameborder="0" 
         width="960" 
@@ -15,6 +17,8 @@ Additionally, the project includes a computer vision node for object detection a
         mozallowfullscreen="true" 
         webkitallowfullscreen="true">
 </iframe>
+
+
 ---
 ## 1. Key Features
 
