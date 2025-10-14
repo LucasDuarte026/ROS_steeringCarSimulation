@@ -9,12 +9,12 @@ Additionally, the project includes a computer vision node for object detection a
 ---
 
 
-<iframe src="https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/embed?start=false&loop=false&delayms=3000" 
-        frameborder="0" 
-        width="960" 
-        height="569" 
-        allowfullscreen="true" 
-        mozallowfullscreen="true" 
+<iframe src="https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/preview"
+        frameborder="0"
+        width="960"
+        height="569"
+        allowfullscreen="true"
+        mozallowfullscreen="true"
         webkitallowfullscreen="true">
 </iframe>
 
