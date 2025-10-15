@@ -8,15 +8,8 @@ Additionally, the project includes a computer vision node for object detection a
 
 ---
 
+[![View Presentation](./images/Intelligent robotics.png)](https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/embed)
 
-<iframe src="https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/preview"
-        frameborder="0"
-        width="960"
-        height="569"
-        allowfullscreen="true"
-        mozallowfullscreen="true"
-        webkitallowfullscreen="true">
-</iframe>
 
 
 ---
