@@ -8,9 +8,7 @@ Additionally, the project includes a computer vision node for object detection a
 
 ---
 
-[![View Presentation](./images/Intelligent robotics.png)](https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/embed)
-
-
+[![View Presentation](./images/main_page.png)](https://docs.google.com/presentation/d/1IHDHYxDd89AFd3SCArOyJhQk58Bnfq_PZfDISJFwkpo/embed)
 
 ---
 ## 1. Key Features
